@@ -1,0 +1,91 @@
+<div class="container">
+  <h1>Primer proyecto</h1>
+  <h2>{{ welcome }}</h2>
+
+  <ul>
+    <li *ngFor="let elem of tasks()">
+      {{ elem }}
+    </li>
+  </ul>
+
+  <h2>{{ "hola".repeat(3) }}</h2>
+  <!-- aqui podemos ejecutar javascript de forma directa -->
+  <p>{{ "Hola mi nombre es " + nameSignal() }}</p>
+  <p>y mi edad es de {{ age }} años</p>
+  <hr />
+  <img [src]="person.avatar" alt="" style="width:100px;"/>
+  <input type="number" [value]="person.age" />
+  <button [disabled]="disabledButton">Click me</button>
+  <p>person:{{ person.name }}</p>
+  <hr />
+  <button (click)="clickHandler()">click</button>
+  <hr />
+  <button (dblclick)="clickHandler()">click</button>
+  <hr />
+  <p>(change)</p>
+  <input type="number" [value]="person.age" (change)="changeHandler($event)" />
+  <p>(keydown)</p>
+  <input type="text" [value]="person.name" (keydown)="keydownHandler($event)" />
+  <hr>
+  <h1>Signals</h1>
+  <input type="text" [value]="nameSignal()" (keydown)="changeHandler($event)" />
+  <p>name: {{nameSignal()}} </p>
+
+  <ul>
+    <p>total: {{tasks().length}} </p>
+    <li *ngFor="let elem of tasks(); index as i">
+      {{i}} {{ elem }}
+    </li>
+  </ul>
+</div>
+
+<div *ngIf="1 !==1">
+  my content
+</div>
+<div *ngIf="nameSignal() ==='julian' ">
+  my content 2222
+</div>
+<div *ngIf="personSignal().name ==='julian' && personSignal().age > 18 else myBlock">
+  "hola soy {{personSignal().name}} y tengo {{personSignal().age}} años"
+</div>
+<ng-template #myBlock>
+  no soy julian
+</ng-template>
+
+<input type="text" [value]="personSignal().name" (change)="changeName($event)">
+<div [ngSwitch]="personSignal().name">
+  <p *ngSwitchCase="'julian'">yo soy julian</p>
+  <p *ngSwitchCase="'nicolas'">yo soy nicolas</p>
+  <p *ngSwitchCase="'andres'">yo soy Andres</p>
+  <p *ngSwitchDefault>No soy nadie</p>
+
+</div>
+
+
+<div>
+  <input type="color" [formControl]="colorCtrl">
+  <p>color: {{colorCtrl.value}} </p>
+</div>
+<div>
+  <svg>
+    <g>
+      <rect x="0" y="0" height="100" width="100" [attr.fill]="colorCtrl.value"/>
+    </g>
+  </svg>
+</div>
+
+<div>
+  <input type="number" [formControl]="widthCtrl">
+  <span class="box" [style.width.px]="widthCtrl.value"></span>
+</div>
+<br>
+<div>
+  <p>
+    <input type="text" [formControl]="nameCtrl"> <br/>
+    <!-- <span class="message-error" *ngIf="nameCtrl.invalid && nameCtrl.touched">Nombre Invalido</span> -->
+    <span class="message-error" [class.show]="nameCtrl.invalid && nameCtrl.touched">Nombre Invalido</span>
+  </p>
+  <p>
+    <input type="text">
+  </p>
+</div>
